@@ -10,7 +10,7 @@ public class App {
 
         gasto1.mostraGasto();
 
-        saldo01.valorSaldo = 1000 - gasto1.valorGasto ;
+        saldo01.valorSaldo = saldo01.valorSaldo - gasto1.valorGasto ;
         saldo01.mostraSaldo();
 
     }
