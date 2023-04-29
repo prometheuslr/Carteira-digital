@@ -1,5 +1,19 @@
 public class Saldo{
-    float valorSaldo;
+    double valorSaldo;
+
+
+public Saldo(double valorSaldo){
+    this.valorSaldo = valorSaldo;
+}
+
+public double getValorSaldo() {
+        return valorSaldo;
+    }
+
+
+    public void setValorSaldo(float valorSaldo) {
+        this.valorSaldo = valorSaldo;
+    }
 
 
 void mostraSaldo(){

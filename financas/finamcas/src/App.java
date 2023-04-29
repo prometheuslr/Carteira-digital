@@ -1,17 +1,31 @@
+
+import javax.swing.JOptionPane;
+
 public class App {
     public static void main(String[] args) throws Exception {
-        Saldo saldo01 = new Saldo();
-            saldo01.valorSaldo = 1000;
-        saldo01.mostraSaldo();
+        
+        String saldoSt = JOptionPane.showInputDialog("Defina o seu saldo:");
 
-        Gasto gasto1 = new Gasto();
-            gasto1.nomeGasto = "conta celular";
-            gasto1.valorGasto = 50f;
+    
+            double saldoDouble = Double.parseDouble(saldoSt);
+            Saldo saldo01 = new Saldo(saldoDouble);
+            
+            int continuar = 0;
+            while(continuar == 0){
 
-        gasto1.mostraGasto();
-
-        saldo01.valorSaldo = saldo01.valorSaldo - gasto1.valorGasto ;
-        saldo01.mostraSaldo();
-
+                String nomeGasto = JOptionPane.showInputDialog("Nome do Gasto:");
+                String valorGasto = JOptionPane.showInputDialog("Valor do Gasto:");
+    
+                double valorGastoDouble = Double.parseDouble(valorGasto);
+                Gasto gasto01 = new Gasto(nomeGasto, valorGastoDouble);
+               
+               
+                saldo01.valorSaldo = saldo01.valorSaldo - gasto01.valorGasto ;
+                
+                String saldoGastoSt = String.valueOf(saldo01.valorSaldo);
+                JOptionPane.showMessageDialog(null,"O seu saldo atual é : "+ saldoGastoSt);
+    
+                continuar = JOptionPane.showConfirmDialog(null, "Deseja continuar");
+            }
     }
 }
