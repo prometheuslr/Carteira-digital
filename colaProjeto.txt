@@ -1,0 +1,18 @@
+Menu
+  1- ADD Salario
+  2- ADD Despesa
+  3- ADD valor Extra 
+  4- Informações sobre suas despesas
+  5- Conferi Saldo 
+
+Observações
+
+1-	Salário deve conter valor do salário e dia do pagamento
+2-	Todo mês deve acrescentar o valor do salário de acordo com o dia do pagamento  
+3-	Despesa será dividida em boletos e compras no debito
+4-	Informações sobre sua despesa deve informa quais são os maiores gasto e a porcentagem dele
+5-	Todo dia deve gerar um extrato em um arquivo .txt com o nome de” extrato + a data do dia que foi gerado o extrato”
+6-	O programa deve ler o saldo do extrato do dia anterior 
+
+
+
