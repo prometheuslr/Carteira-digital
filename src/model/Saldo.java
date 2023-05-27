@@ -1,7 +1,8 @@
 package model;
 
-public class Saldo {
+public class Saldo extends Salario{
     private double valorSaldo;
+
 
     public double getValorSaldo() {
         return valorSaldo;
@@ -20,6 +21,13 @@ public class Saldo {
 
         System.out.printf("Seu saldo atual é R$ %.2f", valorSaldo);
     }
+
+
+    public String mostraSaldo(){
+
+        return"Seu saldo é de R$ "+getValorSaldo();
+    }
+
 
 
 }
