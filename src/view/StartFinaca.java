@@ -35,7 +35,7 @@ public class StartFinaca {
                         System.out.println("Dia do pagamento:");    
                         dia = ler.nextInt();
                         saldo.setDiaPagamento(dia);
-                        
+                         System.out.println("Dia do pagamento:");
                         break;
     
                     case 2:
