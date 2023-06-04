@@ -5,6 +5,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 import controller.Extrato;
+import controller.SaldoControl;
 import model.Debito;
 import model.Saldo;
 
@@ -16,7 +17,8 @@ public class StartFinaca {
             Saldo saldo = new Saldo();
             Scanner ler = new Scanner(System.in);
             String opc="sim";
-
+            SaldoControl saldContro = new SaldoControl();
+            Extrato ext = new Extrato();
         
             while(!opc.equals("nao")){
 
@@ -36,21 +38,22 @@ public class StartFinaca {
                         System.out.println("Valor do salario:");
                         valSalario = ler.nextDouble();
                         double a = saldo.setValoSalario(valSalario);
-                        saldo.addSaldo(a);
+                        saldContro.addSaldo(a);
                         System.out.println("Dia do pagamento:");    
                         dia = ler.nextInt();
                         saldo.setDiaPagamento(dia);
-                         System.out.println("Dia do pagamento:");
+                         ext.salvarAlteracao(saldContro.getValorSaldo());
                         break;
     
                     case 2:
                         System.out.println("Digite o valor que deseja add ao eu saldo:");
-                        saldo.addSaldo(ler.nextDouble());
+                        saldContro.addSaldo(ler.nextDouble());
+                        ext.salvarAlteracao(saldContro.getValorSaldo());
 
                         break;
                         
                     case 3:
-                        System.out.println(saldo.mostraSaldo());
+                    saldContro.mostraSaldo();
                         break;
                         
                     case 4:
@@ -60,8 +63,6 @@ public class StartFinaca {
                         default:
                         break;
                     }
-                    Extrato ext = new Extrato();
-                    ext.salvarAlteracao();
                     System.out.println("Deseja voltar para o menu?(sim/nao)");
                     opc= ler.next();
             }

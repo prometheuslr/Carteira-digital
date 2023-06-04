@@ -13,27 +13,23 @@ import java.util.Date;
 import model.Saldo;
 
 public class Extrato extends Saldo {
-    @Override
-    public double getValorSaldo() {
-        // TODO Auto-generated method stub
-        return super.getValorSaldo();
-    }
-
+    
     static final String FILENAME = "extrato.txt";
      static String getDataHoraAtual() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date dataHoraAtual = new Date();
         return dateFormat.format(dataHoraAtual);
     }
-// segunda parte 
-    public  void salvarAlteracao() {
+
+    public static void salvarAlteracao(double valor) {
         try {
             if (!Files.exists(Paths.get(FILENAME))) {
                 Files.createFile(Paths.get(FILENAME));
             }
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILENAME, true));
-            writer.append(getValorSaldo() + " - " + getDataHoraAtual());
+            
+            writer.append("Saldo:R$ " + valor + " - " + getDataHoraAtual());
             writer.newLine();
             writer.close();
 
