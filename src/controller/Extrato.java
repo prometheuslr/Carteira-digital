@@ -10,22 +10,30 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Extrato {
-     static final String FILENAME = null;
+import model.Saldo;
+
+public class Extrato extends Saldo {
+    @Override
+    public double getValorSaldo() {
+        // TODO Auto-generated method stub
+        return super.getValorSaldo();
+    }
+
+    static final String FILENAME = "extrato.txt";
      static String getDataHoraAtual() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date dataHoraAtual = new Date();
         return dateFormat.format(dataHoraAtual);
     }
 // segunda parte 
-    public static void salvarAlteracao(double valor) {
+    public  void salvarAlteracao() {
         try {
             if (!Files.exists(Paths.get(FILENAME))) {
                 Files.createFile(Paths.get(FILENAME));
             }
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILENAME, true));
-            writer.append(valor + " - " + getDataHoraAtual());
+            writer.append(getValorSaldo() + " - " + getDataHoraAtual());
             writer.newLine();
             writer.close();
 

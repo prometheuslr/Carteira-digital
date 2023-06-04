@@ -61,7 +61,7 @@ public class StartFinaca {
                         break;
                     }
                     Extrato ext = new Extrato();
-                    ext.salvarAlteracao(saldo.getValorSaldo());
+                    ext.salvarAlteracao();
                     System.out.println("Deseja voltar para o menu?(sim/nao)");
                     opc= ler.next();
             }
