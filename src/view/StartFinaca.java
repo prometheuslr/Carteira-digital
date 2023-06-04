@@ -2,6 +2,9 @@ package view;
 
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
+import controller.Extrato;
 import model.Debito;
 import model.Saldo;
 
@@ -17,21 +20,23 @@ public class StartFinaca {
         
             while(!opc.equals("nao")){
 
+                
                 System.out.println("---------------------------------------");
                 System.out.println("Menu(Digite o numero para ter acesso)");
                 System.out.println("---------------------------------------");
     
-                System.out.println("1- Add Salario");
+                System.out.println("1- Definir Salario");
                 System.out.println("2- Add Extra");
-                System.out.println("3- Conferi Saldo");
-                System.out.println("4- Add Dispeza");
+                System.out.println("3- Conferir Saldo");
+                System.out.println("4- Add Despesa");
                 opcao =  ler.nextInt();
     
                 switch (opcao) {
                     case 1:
                         System.out.println("Valor do salario:");
                         valSalario = ler.nextDouble();
-                        saldo.setValoSalario(valSalario);
+                        double a = saldo.setValoSalario(valSalario);
+                        saldo.addSaldo(a);
                         System.out.println("Dia do pagamento:");    
                         dia = ler.nextInt();
                         saldo.setDiaPagamento(dia);
@@ -55,7 +60,9 @@ public class StartFinaca {
                         default:
                         break;
                     }
-                    System.out.println("Deseja voltar para o menu?");
+                    Extrato ext = new Extrato();
+                    ext.salvarAlteracao(saldo.getValorSaldo());
+                    System.out.println("Deseja voltar para o menu?(sim/nao)");
                     opc= ler.next();
             }
             

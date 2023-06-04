@@ -17,8 +17,9 @@ public class Salario {
         return valoSalario;
     }
 
-    public void setValoSalario(double valoSalario) {
+    public double setValoSalario(double valoSalario) {
         this.valoSalario = valoSalario;
+        return this.valoSalario;
     }
 
 

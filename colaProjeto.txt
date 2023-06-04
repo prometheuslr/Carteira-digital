@@ -16,3 +16,42 @@ Observações
 
 
 
+
+public class App {
+    private static final String FILENAME = "dados.txt";
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Informe um valor double: ");
+        double valor = scanner.nextDouble();
+
+        String dataHora = getDataHoraAtual();
+        salvarAlteracao(valor, dataHora);
+    }
+
+    private static String getDataHoraAtual() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date dataHoraAtual = new Date();
+        return dateFormat.format(dataHoraAtual);
+    }
+
+    private static void salvarAlteracao(double valor, String dataHora) {
+        try {
+            if (!Files.exists(Paths.get(FILENAME))) {
+                Files.createFile(Paths.get(FILENAME));
+            }
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(FILENAME, true));
+            writer.append(valor + " - " + dataHora);
+            writer.newLine();
+            writer.close();
+
+            System.out.println("Alteração salva com sucesso.");
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar a alteração: " + e.getMessage());
+        }
+    }
+}
+
+
