@@ -4,8 +4,8 @@ import model.Saldo;
 
 public class SaldoControl extends Saldo{
     
-    public void addSaldo(double newSaldo){
-        valorSaldo = newSaldo + getValorSaldo();
+    public void addSaldo(double newSaldo) {
+        valorSaldo += newSaldo;
     }
 
     public void subSaldo(double sub){
@@ -19,4 +19,5 @@ public class SaldoControl extends Saldo{
 
         return"Seu saldo é de R$ "+getValorSaldo();
     }
+    
 }
