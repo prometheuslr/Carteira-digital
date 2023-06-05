@@ -16,7 +16,7 @@ import model.Saldo;
 
 public class Extrato  {
     
-   //Metodo de obter a utima linha onde ira retornar a utima linha
+   //método de obter a última linha onde ira retornar a última linha
     public static String obterUltimaLinha(String arquivo) {
         String lastLine = null;
         try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))) {
@@ -29,7 +29,8 @@ public class Extrato  {
         }
         return lastLine;
     }
-    //
+    
+    //método para obter o valor do saldo a partir de uma linha do extrato
     private double obterValorSaldo(String linha) {
         int index = linha.indexOf("Saldo:R$ ");
         if (index != -1) {
@@ -42,15 +43,16 @@ public class Extrato  {
         }
         return 0.0;
     }
-//
-    
+
+    //método para obter a data e hora atual formatada como string
     static final String FILENAME = "extrato.txt";
      static String getDataHoraAtual() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date dataHoraAtual = new Date();
         return dateFormat.format(dataHoraAtual);
     }
-// 
+    
+    //método para salvar uma alteração no saldo no arquivo de extrato 
     public static void salvarAlteracao(double saldoAnterior, double novoSaldo) {
         double saldoTotal = saldoAnterior + novoSaldo;
         try {
@@ -69,7 +71,7 @@ public class Extrato  {
         }
     }
 
-    //
+    //método para obter o saldo atual a partir do arquivo de extrato
     public double obterSaldoAtual(String arquivo) {
         try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))) {
             String lastLine = null;
@@ -83,6 +85,6 @@ public class Extrato  {
         } catch (IOException e) {
             System.out.println("Erro ao ler o arquivo: " + e.getMessage());
         }
-        return 0.0; // Retorna 0 se não houver saldo registrado no extrato
+        return 0.0; //retorna 0 se não houver saldo registrado no extrato
     }
 }
