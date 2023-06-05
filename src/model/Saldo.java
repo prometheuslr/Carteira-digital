@@ -1,15 +1,15 @@
 package model;
 
-//classe "Saldo" que vai herdar as caracteristicas da classe "Salario"
+// Classe "Saldo" que vai herdar as caracteristicas da classe "Salario"
 public class Saldo extends Salario{
     
      /* 
-    modificador de acesso "protected" que torna o membro acessível 
+    Modificador de acesso "protected" que torna o membro acessível 
     às classes do mesmo pacote ou através de herança
     */  
     protected double valorSaldo;
     
-    //definindo o valor inicial do saldo no caso "0.0"
+    // Definindo o valor inicial do saldo no caso "0.0"
     public Saldo() {
         this.valorSaldo = 0.0;
     }
@@ -25,12 +25,12 @@ public class Saldo extends Salario{
         this.valorSaldo = valorSaldo;
     }
     
-    //adiciona um valor ao saldo atual
+    // Adiciona um valor ao saldo atual
     public void addSaldo(double newSaldo){
         
     }
     
-    //subtrai um valor do saldo atual
+    // Subtrai um valor do saldo atual
     public void subSaldo(double sub){
         
     }
