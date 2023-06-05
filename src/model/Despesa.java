@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /*
-criando umaa classe abstrata chamada "Despesa" que
+Criando umaa classe abstrata chamada "Despesa" que
 possui nome, valor e data
 */
 public abstract class Despesa {
@@ -13,14 +13,14 @@ public abstract class Despesa {
     private double valor;
     private String data;
     
-    //usando as bibliotecas java.text.DateFormat e java.util.Date para definir a data atual
+    // Usando as bibliotecas java.text.DateFormat e java.util.Date para definir a data atual
     static String getDataHoraAtual() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date dataHoraAtual = new Date();
         return dateFormat.format(dataHoraAtual);
     }
     
-    //definindo os atributos "nome" e "valor" da classe "Despesa"
+    // Definindo os atributos "nome" e "valor" da classe "Despesa"
     public Despesa(String nome, double valor) {
         this.nome = nome;
         this.valor = valor;
