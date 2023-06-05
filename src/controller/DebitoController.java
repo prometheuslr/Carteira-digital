@@ -12,19 +12,19 @@ import java.util.Date;
 public class DebitoController {
     private static final String EXTRATO_FILE = "extrato.txt";
     
-    //Método para registrar um débito no extrato
+    // Método para registrar um débito no extrato
     public static void registrarDebito(double valorDebito, double saldoAnterior) {
         double novoSaldo = saldoAnterior - valorDebito;
 
         try {
             String dataHoraAtual = getDataHoraAtual();
 
-            //Verifica se o arquivo de extrato existe, caso contrário, cria vai criar um novo
+            // Verifica se o arquivo de extrato existe, caso contrário, cria vai criar um novo
             if (!Files.exists(Paths.get(EXTRATO_FILE))) {
                 Files.createFile(Paths.get(EXTRATO_FILE));
             }
             
-            //Abre o arquivo em modo de escrita para implementar as informações do débito
+            // Abre o arquivo em modo de escrita para implementar as informações do débito
             BufferedWriter writer = new BufferedWriter(new FileWriter(EXTRATO_FILE, true));
             writer.append("Despesa: R$ " + valorDebito + " - " + dataHoraAtual);
             writer.newLine();
@@ -39,7 +39,7 @@ public class DebitoController {
     }
 
     
-    //Método para conseguir a data e hora atual no formato de string
+    // Método para conseguir a data e hora atual no formato de string
     private static String getDataHoraAtual() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date dataHoraAtual = new Date();
