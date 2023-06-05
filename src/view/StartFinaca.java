@@ -20,10 +20,12 @@ import model.Saldo;
             Extrato ext = new Extrato();
             Saldo saldo = new Saldo(ext.obterSaldoAtual("extrato.txt"));
     
+            // Verifica se o arquivo de extrato existe e atualiza o saldo
             if (Files.exists(Paths.get("extrato.txt"))) {
                 saldo.setValorSaldo(ext.obterSaldoAtual("extrato.txt"));
             }
     
+            // Enquanto "opc" for diferente de "nao"
             while (!opc.equals("nao")) {
     
                 System.out.println("---------------------------------------");
