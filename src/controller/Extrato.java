@@ -69,7 +69,7 @@ public class Extrato  {
         }
     }
 
-    //+
+    //
     public double obterSaldoAtual(String arquivo) {
         try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))) {
             String lastLine = null;

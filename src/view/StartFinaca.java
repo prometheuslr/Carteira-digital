@@ -1,5 +1,5 @@
 package view;
-
+import controller.DebitoController;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -60,12 +60,12 @@ import model.Saldo;
                         break;
     
                     case 4:
-                        System.out.println("Qual é o nome da despesa:");
-                        ler.next();
-                        System.out.println("Qual é o valor da despesa:");
-                        ler.nextDouble();
-                        // ext.salvarAlteracao(saldo.getValorSaldo(), saldContro.getValorSaldo());
-                        break;
+                    System.out.println("Qual é o nome da despesa:");
+                    String nomeDespesa = ler.next();
+                    System.out.println("Qual é o valor da despesa:");
+                    double valorDespesa = ler.nextDouble();
+                    DebitoController.registrarDebito(valorDespesa,  saldContro.getValorSaldo());
+                    break;
     
                     case 5:
                         break;
