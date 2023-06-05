@@ -9,14 +9,14 @@ public class SaldoControl extends Saldo{
         valorSaldo += newSaldo;
     }
     
-     //subtraindo um valor ao saldo atual
+     // Subtraindo um valor ao saldo atual
     public void subSaldo(double sub){
         valorSaldo =  getValorSaldo() - sub ;
 
         System.out.printf("Seu saldo atual é R$ %.2f", valorSaldo);
     }
 
-    //retornando o valor do saldo mais a frase "Seu saldo é de R$"
+    // Retornando o valor do saldo mais a frase "Seu saldo é de R$"
     public String mostraSaldo(){
 
         return"Seu saldo é de R$ "+getValorSaldo();
