@@ -1,85 +1,107 @@
 package view;
-import controller.DebitoController;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
-import controller.Extrato;
-import controller.SaldoControl;
-import model.Debito;
-import model.Saldo;
 
+import controller.DebitoController;
+import controller.ExtratoController;
+import controller.SaldoController;
 
-    public class StartFinaca {
-        public static void main(String[] args) {
-            int opcao;
-            int dia;
-            double valSalario;
-            Scanner ler = new Scanner(System.in);
-            String opc = "sim";
-            SaldoControl saldContro = new SaldoControl();
-            Extrato ext = new Extrato();
-            Saldo saldo = new Saldo(ext.obterSaldoAtual("extrato.txt"));
-    
-            // Verifica se o arquivo de extrato existe e atualiza o saldo
-            if (Files.exists(Paths.get("extrato.txt"))) {
-                saldo.setValorSaldo(ext.obterSaldoAtual("extrato.txt"));
+public class StartFinaca {
+    public static void main(String[] args) {
+        SaldoController saldoController = new SaldoController();
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+
+        do {
+            exibirMenu();
+
+            try {
+                opcao = scanner.nextInt();
+                scanner.nextLine(); // Consumir quebra de linha após a leitura do número
+            } catch (InputMismatchException e) {
+                System.out.println("Opção inválida. Por favor, digite um número válido.");
+                scanner.nextLine(); // Limpar o buffer
+                opcao = -1; // Definir uma opção inválida para continuar o loop
             }
-    
-            // Enquanto "opc" for diferente de "nao"
-            while (!opc.equals("nao")) {
-    
-                //Menu
-                System.out.println("---------------------------------------");
-                System.out.println("Menu(Digite o numero para ter acesso)");
-                System.out.println("---------------------------------------");
-    
-                System.out.println("1- Definir Salario");
-                System.out.println("2- Add Extra");
-                System.out.println("3- Conferir Saldo");
-                System.out.println("4- Add Despesa");
-                System.out.println("5- Conferir extrato");
-                opcao = ler.nextInt();
-    
-                switch (opcao) {
-                    case 1:
-                        System.out.println("Valor do salario:");
-                        valSalario = ler.nextDouble();
-                        double a = saldo.setValoSalario(valSalario);
-                        saldContro.addSaldo(a);
-                        System.out.println("Dia do pagamento:");
-                        dia = ler.nextInt();
-                        saldo.setDiaPagamento(dia);
-                        ext.salvarAlteracao(saldo.getValorSaldo(), saldContro.getValorSaldo());
-                        break;
-    
-                    case 2:
-                        System.out.println("Digite o valor que deseja add ao eu saldo:");
-                        saldContro.addSaldo(ler.nextDouble());
-                        ext.salvarAlteracao(saldo.getValorSaldo(), saldContro.getValorSaldo());
-                        break;
-    
-                    case 3:
-                        saldContro.mostraSaldo();
-                        break;
-    
-                    case 4:
-                    System.out.println("Qual é o nome da despesa:");
-                    String nomeDespesa = ler.next();
-                    System.out.println("Qual é o valor da despesa:");
-                    double valorDespesa = ler.nextDouble();
-                    DebitoController.registrarDebito(valorDespesa,  saldContro.getValorSaldo());
+
+            switch (opcao) {
+                case 1:
+                    saldoController.addSaldoFromUserInput();
                     break;
-    
-                    case 5:
-                        break;
-    
-                    default:
-                        break;
-                }
-                System.out.println("Deseja voltar para o menu?(sim/nao)");
-                opc = ler.next();
-                
+
+                case 2:
+                    int tipoDespesa = exibirOpcoesTipoDespesa(scanner);
+                    scanner.nextLine(); // Consumir quebra de linha
+
+                    System.out.print("Informe o nome da despesa: ");
+                    String nomeDespesa = scanner.nextLine();
+                    System.out.print("Informe o valor da despesa: ");
+                    double valorDespesa = scanner.nextDouble();
+
+                    if (tipoDespesa == 1) {
+                        DebitoController.registrarDebito(nomeDespesa, valorDespesa);
+                    } /*else if (tipoDespesa == 2) {
+                        
+                        
+                    } */else {
+                        System.out.println("Opção inválida. Voltando ao menu principal.");
+                    }
+
+                    System.out.println("Despesa registrada com sucesso.");
+                    break;
+
+                case 3:
+                    saldoController.mostraSaldo();
+                    break;
+
+                case 4:
+                    ExtratoController.exibirExtrato();
+                    break;
+
+                case 0:
+                    System.out.println("Encerrando o programa...");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida. Por favor, tente novamente.");
             }
-        }
+            System.out.println();
+        } while (opcao != 0);
+
+        scanner.close();
     }
 
+    private static void exibirMenu() {
+        System.out.println("===== Menu =====");
+        System.out.println("1 - Adicionar saldo");
+        System.out.println("2 - Registrar despesa");
+        System.out.println("3 - Mostrar saldo");
+        System.out.println("4 - Mostrar extrato");
+        System.out.println("0 - Sair");
+        System.out.print("Escolha uma opção: ");
+    }
+
+    private static int exibirOpcoesTipoDespesa(Scanner scanner) {
+        int tipoDespesa;
+        while (true) {
+            System.out.println("Selecione o tipo de despesa:");
+            System.out.println("1 - Débito");
+            //System.out.println("2 - );
+            System.out.print("Digite o número correspondente: ");
+
+            try {
+                tipoDespesa = scanner.nextInt();
+                if (tipoDespesa == 1 /*|| tipoDespesa == 2*/) {
+                    break;
+                } else {
+                    System.out.println("Opção inválida. Por favor, digite 1 ");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Valor inválido. Por favor, digite um número válido.");
+                scanner.nextLine(); // Limpar o buffer
+            }
+        }
+        return tipoDespesa;
+    }
+}

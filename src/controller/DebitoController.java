@@ -3,46 +3,69 @@ package controller;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import model.Debito;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 public class DebitoController {
-    private static final String EXTRATO_FILE = "extrato.txt";
-    
-    // Método para registrar um débito no extrato
-    public static void registrarDebito(double valorDebito, double saldoAnterior) {
-        double novoSaldo = saldoAnterior - valorDebito;
+    // Lista para armazenar as despesas
+    private static List<Debito> despesas = new ArrayList<>();
+    // Lista para armazenar o extrato
+    private static List<String> extrato = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+    private static BufferedWriter writer;
 
-        try {
-            String dataHoraAtual = getDataHoraAtual();
+    // Método responsável por registrar um débito
+    public static void registrarDebito(String nomeDespesa, double valorDespesa) {
+        
+        double saldoAnterior = SaldoController.getSaldo();
+        double saldoAtual = saldoAnterior - valorDespesa;
 
-            // Verifica se o arquivo de extrato existe, caso contrário, cria vai criar um novo
-            if (!Files.exists(Paths.get(EXTRATO_FILE))) {
-                Files.createFile(Paths.get(EXTRATO_FILE));
+        // Verifica se o saldo atual é negativo
+        if (saldoAtual < 0) {
+            System.out.println("Saldo insuficiente!");
+            System.out.print("Digite um novo valor para a despesa (ou 0 para voltar ao menu): ");
+            double novoValorDespesa = scanner.nextDouble();
+            // Verifica se o usuário deseja voltar ao menu
+            if (novoValorDespesa == 0) {
+                return;
             }
             
-            // Abre o arquivo em modo de escrita para implementar as informações do débito
-            BufferedWriter writer = new BufferedWriter(new FileWriter(EXTRATO_FILE, true));
-            writer.append("Despesa: R$ " + valorDebito + " - " + dataHoraAtual);
-            writer.newLine();
-            writer.append("Saldo: R$ " + novoSaldo + " - " + dataHoraAtual);
-            writer.newLine();
-            writer.close();
+            return;
+        }
 
-            System.out.println("Débito registrado com sucesso.");
+        // Chama o método para registrar a movimentação no extrato
+        registrarMovimentacao(nomeDespesa, valorDespesa, saldoAtual);
+         }
+
+    // Método privado responsável por registrar a movimentação no extrato
+    private static void registrarMovimentacao(String nomeDespesa, double valorDespesa, double saldoAtual) {
+        LocalDateTime dataHoraAtual = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String dataHoraFormatada = dataHoraAtual.format(formatter);
+    
+        String movimentacaoCompleta = dataHoraFormatada + " - Despesa registrada: " + nomeDespesa + " - Valor: -" + valorDespesa + " - Saldo atual: " + saldoAtual;
+        
+    
+        try {
+            writer = new BufferedWriter(new FileWriter("extrato.txt", true));
+            writer.write(movimentacaoCompleta + System.lineSeparator()); // Escreve a movimentação completa no arquivo de extrato
+            writer.close();
         } catch (IOException e) {
-            System.out.println("Erro ao registrar o débito: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    
-    // Método para conseguir a data e hora atual no formato de string
-    private static String getDataHoraAtual() {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date dataHoraAtual = new Date();
-        return dateFormat.format(dataHoraAtual);
+    // Método getter para obter a lista de despesas
+    public static List<Debito> getDespesas() {
+        return despesas;
+    }
+
+    // Método getter para obter o extrato
+    public static List<String> getExtrato() {
+        return extrato;
     }
 }
