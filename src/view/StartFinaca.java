@@ -9,12 +9,13 @@ import controller.SaldoController;
 
 public class StartFinaca extends Menu{
     public static void main(String[] args) {
+         // Criação das instâncias dos controladores e do objeto Scanner
         SaldoController saldoController = new SaldoController();
         Scanner scanner = new Scanner(System.in);
         int opcao;
 
         do {
-            exibirMenu();
+            exibirMenu(); // Chamada do método estático da classe Menu para exibir o menu
 
             try {
                 opcao = scanner.nextInt();
@@ -69,7 +70,7 @@ public class StartFinaca extends Menu{
             System.out.println();
         } while (opcao != 0);
 
-        scanner.close();
+        scanner.close(); // Fechar o Scanner ao final do programa
     }
 
     
