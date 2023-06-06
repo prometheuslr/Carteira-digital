@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
+    // Método para exibir o menu
     protected static void exibirMenu() {
         System.out.println("===== Menu =====");
         System.out.println("1 - Adicionar saldo");
@@ -14,6 +15,7 @@ public class Menu {
         System.out.print("Escolha uma opção: ");
     }
 
+    // Método para exibir as opções de tipo de despesa e obter a escolha do usuário
     protected static int exibirOpcoesTipoDespesa(Scanner scanner) {
         int tipoDespesa;
         while (true) {
