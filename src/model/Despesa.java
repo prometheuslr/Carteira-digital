@@ -1,7 +1,7 @@
 package model;
 
 
-
+//classe "Despesa" declarada com o modificador "public" e com dois atributos "nome" e "valor" 
 public abstract class Despesa {
     private String nome;
     private double valor;
