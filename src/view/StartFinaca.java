@@ -52,8 +52,8 @@ public class StartFinaca {
                     break;
 
                 case 3:
-                    saldoController.mostraSaldo();
-                    break;
+                    SaldoController.mostraSaldo();
+                break;
 
                 case 4:
                     ExtratoController.exibirExtrato();

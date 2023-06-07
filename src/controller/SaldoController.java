@@ -12,9 +12,33 @@ import java.util.List;
 import java.util.Scanner;
 
 public class SaldoController {
+
+    private static Scanner scanner = new Scanner(System.in);
     // Atributo para armazenar o modelo de saldo
     private static SaldoModel saldoModel;
 
+    public static void registrarDebito(String nomeDespesa, double valorDespesa) {
+        SaldoController saldoController = new SaldoController();
+        double saldoAnterior = saldoController.getSaldo();
+        double saldoAtual = saldoAnterior - valorDespesa;
+    
+        // Verifica se o saldo atual é negativo
+        if (saldoAtual < 0) {
+            System.out.println("Saldo insuficiente!");
+            System.out.print("Digite um novo valor para a despesa (ou 0 para voltar ao menu): ");
+            double novoValorDespesa = scanner.nextDouble();
+            // Verifica se o usuário deseja voltar ao menu
+            if (novoValorDespesa == 0) {
+                return;
+            }
+    
+            return;
+        }
+    
+        saldoController.subtractSaldo(valorDespesa);
+        registrarMovimentacao(nomeDespesa);
+    }
+    
     // Construtor padrão da classe
     public SaldoController() {
         this.saldoModel = new SaldoModel();
@@ -77,9 +101,9 @@ public class SaldoController {
     }
 
     // Método para subtrair saldo
-    public static void subtractSaldo(double valor) {
+    public void subtractSaldo(double valor) {
         saldoModel.subtractSaldo(valor);
-        registrarMovimentacao("Despesa registrada: -" + valor);
+        
     }
 
     // Método para obter o saldo atual
@@ -116,7 +140,7 @@ public class SaldoController {
     }
 
     // Método privado para inicializar o saldo a partir do arquivo de extrato
-    private static void initSaldoFromExtrato() {
+    public static void initSaldoFromExtrato() {
         try {
             // Lendo todas as linhas do arquivo de extrato
             List<String> lines = Files.readAllLines(Paths.get("extrato.txt"));
@@ -141,11 +165,13 @@ public class SaldoController {
     }
 
     // Método para exibir o saldo atual
-    public void mostraSaldo() {
+    public static void mostraSaldo() {
         double saldoAtual = getSaldo();
-        System.out.println("Seu saldo atual é: " + saldoAtual);
+    System.out.println("Seu saldo atual é: " + saldoAtual);
     }
 
     public static void debitarSaldo(double valor) {
     }
+
+    
 }

@@ -20,10 +20,11 @@ public class DebitoController {
 
     // Método responsável por registrar um débito
     public static void registrarDebito(String nomeDespesa, double valorDespesa) {
-        
-        double saldoAnterior = SaldoController.getSaldo();
+        SaldoController saldoController = new SaldoController(); // Criar uma instância do SaldoController
+    
+        double saldoAnterior = saldoController.getSaldo();
         double saldoAtual = saldoAnterior - valorDespesa;
-
+    
         // Verifica se o saldo atual é negativo
         if (saldoAtual < 0) {
             System.out.println("Saldo insuficiente!");
@@ -33,13 +34,18 @@ public class DebitoController {
             if (novoValorDespesa == 0) {
                 return;
             }
-            
-            return;
+    
+            // Atualiza o valor da despesa para o novo valor digitado
+            valorDespesa = novoValorDespesa;
+            saldoAtual = saldoAnterior - valorDespesa;
         }
-
+    
+        // Atualiza o saldo no objeto SaldoController
+        saldoController.subtractSaldo(valorDespesa);
+    
         // Chama o método para registrar a movimentação no extrato
         registrarMovimentacao(nomeDespesa, valorDespesa, saldoAtual);
-         }
+    }
 
     // Método privado responsável por registrar a movimentação no extrato
     private static void registrarMovimentacao(String nomeDespesa, double valorDespesa, double saldoAtual) {
@@ -49,7 +55,6 @@ public class DebitoController {
     
         String movimentacaoCompleta = dataHoraFormatada + " - Despesa registrada: " + nomeDespesa + " - Valor: -" + valorDespesa + " - Saldo atual: " + saldoAtual;
         
-    
         try {
             writer = new BufferedWriter(new FileWriter("extrato.txt", true));
             writer.write(movimentacaoCompleta + System.lineSeparator()); // Escreve a movimentação completa no arquivo de extrato
