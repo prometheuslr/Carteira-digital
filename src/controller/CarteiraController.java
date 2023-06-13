@@ -1,4 +1,5 @@
 package controller;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -44,6 +45,7 @@ public class CarteiraController {
         } while (opcao != 0);
     }
 
+    // Cria uma nova carteira
     private void criarCarteira() {
         String nome = view.lerNomeCarteira();
         carteira.setNome(nome);
@@ -60,6 +62,7 @@ public class CarteiraController {
         menuCarteira();
     }
 
+    // Lê uma carteira existente a partir de um arquivo
     private void lerCarteiraExistente() {
         String nomeArquivo = view.lerNomeArquivo();
 
@@ -94,6 +97,7 @@ public class CarteiraController {
         menuCarteira();
     }
 
+    // Exibe o menu da carteira
     private void menuCarteira() {
         int opcao;
         do {
@@ -121,6 +125,7 @@ public class CarteiraController {
         } while (opcao != 0);
     }
 
+    // Adiciona um valor à carteira
     private void adicionarValor() {
         double valor = view.lerValor();
         carteira.setSaldo(carteira.getSaldo() + valor);
@@ -134,49 +139,53 @@ public class CarteiraController {
         atualizarArquivo();
     }
 
+    // Adiciona uma despesa à carteira
     private void adicionarDespesa() {
-    String nomeDespesa = view.lerNomeDespesa();
-    double valor = view.lerValor();
+        String nomeDespesa = view.lerNomeDespesa();
+        double valor = view.lerValor();
 
-    if (valor > carteira.getSaldo()) {
-        System.out.println("Saldo insuficiente! Opções:");
-        System.out.println("1. Digitar outro valor");
-        System.out.println("2. Voltar ao menu");
+        if (valor > carteira.getSaldo()) {
+            System.out.println("Saldo insuficiente! Opções:");
+            System.out.println("1. Digitar outro valor");
+            System.out.println("2. Voltar ao menu");
 
-        int opcao = view.exibirMenuOpcoes();
-        switch (opcao) {
-            case 1:
-                adicionarDespesa(); // Chama o método novamente para digitar outro valor
-                break;
-            case 2:
-                break; // Volta ao menu principal
-            default:
-                System.out.println("Opção inválida! Voltando ao menu principal...");
-                break;
+            int opcao = view.exibirMenuOpcoes();
+            switch (opcao) {
+                case 1:
+                    adicionarDespesa(); // Chama o método novamente para digitar outro valor
+                    break;
+                case 2:
+                    break; // Volta ao menu principal
+                default:
+                    System.out.println("Opção inválida! Voltando ao menu principal...");
+                    break;
+            }
+        } else {
+            carteira.setSaldo(carteira.getSaldo() - valor);
+            System.out.println("Despesa adicionada com sucesso!");
+
+            String dataHora = getDataHoraAtual();
+            String registro = dataHora + " - Despesa: " + nomeDespesa + ", Valor: R$" + valor;
+            extrato.add(registro);
+            view.exibirDespesa(registro);
+
+            atualizarArquivo();
         }
-    } else {
-        carteira.setSaldo(carteira.getSaldo() - valor);
-        System.out.println("Despesa adicionada com sucesso!");
-
-        String dataHora = getDataHoraAtual();
-        String registro = dataHora + " - Despesa: " + nomeDespesa + ", Valor: R$" + valor;
-        extrato.add(registro);
-        view.exibirDespesa(registro);
-
-        atualizarArquivo();
     }
-}
 
+    // Retorna a data e hora atual no formato especificado
     private String getDataHoraAtual() {
         Date dataHoraAtual = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         return formato.format(dataHoraAtual);
     }
 
+    // Exibe o saldo atual da carteira
     private void conferirSaldo() {
         view.exibirCarteira(carteira);
     }
 
+    // Exibe o extrato da carteira
     private void conferirExtrato() {
         System.out.println("----- Extrato -----");
         for (String registro : extrato) {
@@ -185,6 +194,7 @@ public class CarteiraController {
         System.out.println("-------------------");
     }
 
+    // Atualiza o arquivo com as informações da carteira e do extrato
     private void atualizarArquivo() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(carteira.getNome() + ".txt"))) {
             writer.println("Nome: " + carteira.getNome());
@@ -200,6 +210,3 @@ public class CarteiraController {
         }
     }
 }
-
-
-

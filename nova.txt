@@ -1,0 +1,5 @@
+Nome: nova
+Saldo: R$100.0
+----- Extrato -----
+12/06/2023 22:03:03 - Valor adicionado: R$100.0
+-------------------
